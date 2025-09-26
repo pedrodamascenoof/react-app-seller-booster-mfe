@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 const Header = () => {
   return (
@@ -28,12 +30,7 @@ const Header = () => {
 
         <div className="flex items-center space-x-4">
           <ThemeToggle />
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
-            Login
-          </Button>
-          <Button className="bg-gradient-primary hover:opacity-90 transition-opacity">
-            Começar Grátis
-          </Button>
+          <AuthButtons />
         </div>
       </nav>
     </header>
@@ -41,3 +38,32 @@ const Header = () => {
 };
 
 export default Header;
+
+function AuthButtons() {
+  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
+
+  if (user) {
+    return (
+      <>
+        <Button variant="ghost" onClick={() => navigate('/dashboard')} className="text-muted-foreground hover:text-foreground">
+          Dashboard
+        </Button>
+        <Button className="bg-gradient-primary hover:opacity-90 transition-opacity" onClick={async () => await signOut()}>
+          Logout
+        </Button>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <Button variant="ghost" className="text-muted-foreground hover:text-foreground" onClick={() => navigate('/login')}>
+        Login
+      </Button>
+      <Button className="bg-gradient-primary hover:opacity-90 transition-opacity" onClick={() => navigate('/signup')}>
+        Começar Grátis
+      </Button>
+    </>
+  );
+}

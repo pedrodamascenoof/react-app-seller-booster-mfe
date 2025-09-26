@@ -44,7 +44,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="space-y-4">
+          <div id="contato" className="space-y-4">
             <h3 className="font-semibold text-lg">Contato</h3>
             <div className="space-y-3 text-sm text-muted-foreground">
               <div className="flex items-center space-x-2">
